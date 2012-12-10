@@ -2,5 +2,11 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 require "parallel_tests"
 require "parallel_tests/cli"
+trap 'TTIN' do
+  Thread.list.each do |thread|
+    puts "Thread TID-#{thread.object_id.to_s(36)}"
+    puts thread.backtrace.join("\n")
+  end
+end
 
 ParallelTest::CLI.run(ARGV)
