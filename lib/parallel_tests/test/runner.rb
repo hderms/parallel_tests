@@ -17,8 +17,10 @@ module ParallelTests
 
       def self.run_tests(test_files, process_number, options)
         require_list = test_files.map { |filename| %{"#{File.expand_path filename}"} }.join(",")
+        puts "test for process number #{process_number} is beginning execution"
         cmd = "ruby -Itest -e '[#{require_list}].each {|f| require f }' -- #{options[:test_options]}"
         execute_command(cmd, process_number, options)
+        puts "test for process number #{process_number} is ending execution"
       end
 
       def self.line_is_result?(line)
